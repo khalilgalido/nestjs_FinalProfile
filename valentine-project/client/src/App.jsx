@@ -95,7 +95,7 @@ function App() {
               required 
             />
           </div>
-          <button type="submit" className="sign-btn">Sign</button>
+          <button type="submit" className="sign-btn">send message</button>
         </form>
 
         <ul className="message-list">
