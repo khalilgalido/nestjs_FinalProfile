@@ -3,8 +3,8 @@ import confetti from 'canvas-confetti';
 import './App.css';
 
 // Import your 4 photos from the assets folder
-import herBefore from './assets/her.png';
-import meBefore from './assets/me.png';
+import herBefore from './assets/her1.png';
+import meBefore from './assets/me1.png';
 import usAfter1 from './assets/us1.png';
 import usAfter2 from './assets/us2.png';
 
@@ -68,7 +68,7 @@ function App() {
 
       <div className="app-container">
         <div className="hero">
-          <h1>{accepted ? "YAY! ❤️" : "Be My Valentine?"}</h1>
+          <h1>{accepted ? "YAY! ❤️" : "Alessandra Will U Be My Valentine?"}</h1>
           {!accepted ? (
             <>
               <div className="buttons">
