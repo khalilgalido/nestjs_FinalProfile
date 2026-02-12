@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 
-// PASTE YOUR BACKEND URL HERE AFTER STARTING THE SERVER (Step 5)
-const API_URL = "https://fuzzy-space-tribble-q7jqqq5pxg992xx44-3000.app.github.dev/guestbook";
+// YOUR API URL
+const API_URL = "https://fuzzy-space-tribble-q7jqqq5pxg992xx44-3000.app.github.dev/guestbook"; 
 
 function App() {
   const [accepted, setAccepted] = useState(false);
@@ -17,13 +17,13 @@ function App() {
       const data = await res.json();
       if(Array.isArray(data)) setMessages(data);
     } catch (error) {
-      console.error("Error fetching (Check API_URL):", error);
+      console.error("Error fetching:", error);
     }
   };
 
   useEffect(() => { fetchMessages(); }, []);
 
-  // Handle Submit (Post)
+  // Handle Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     await fetch(API_URL, {
@@ -41,7 +41,7 @@ function App() {
     fetchMessages();
   };
 
-  // Run-away "No" button
+  // Run-away "No" button logic
   const moveNo = () => {
     const x = Math.random() * 200 - 100;
     const y = Math.random() * 200 - 100;
@@ -49,38 +49,67 @@ function App() {
   };
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'Arial', textAlign: 'center' }}>
-
+    <div className="app-container">
+      
       {/* Valentine Section */}
-      <div style={{ marginBottom: '50px' }}>
+      <div className="hero">
         <h1>{accepted ? "YAY! 💖" : "Be My Valentine?"}</h1>
-        {!accepted && (
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
-            <button onClick={() => setAccepted(true)} style={{ fontSize: '20px', padding: '10px 20px', backgroundColor: 'pink', border: 'none', cursor: 'pointer' }}>YES</button>
-            <button onMouseEnter={moveNo} style={{ ...noStyle, fontSize: '20px', padding: '10px 20px', transition: '0.2s' }}>No</button>
-          </div>
+        
+        {!accepted ? (
+          <>
+            <div className="buttons">
+              <button className="yes-btn" onClick={() => setAccepted(true)}>YES</button>
+              <button 
+                className="no-btn" 
+                style={noStyle} 
+                onMouseEnter={moveNo}
+              >
+                No
+              </button>
+            </div>
+            <p className="pleading-text">Please don't press No! 🥺</p>
+          </>
+        ) : (
+          <div style={{ fontSize: "5rem", marginTop: "20px" }}>💑</div>
         )}
       </div>
 
-      <hr />
+      <hr style={{ opacity: 0.3, margin: "30px 0" }} />
 
       {/* Guestbook Section */}
-      <h2>Guestbook</h2>
-      <form onSubmit={handleSubmit} style={{ marginBottom: '20px' }}>
-        <input placeholder="Name" value={form.name} onChange={e => setForm({...form, name: e.target.value})} required style={{ marginRight: '10px' }}/>
-        <input placeholder="Message" value={form.message} onChange={e => setForm({...form, message: e.target.value})} required style={{ marginRight: '10px' }}/>
-        <button type="submit">Sign</button>
-      </form>
+      <div className="guestbook">
+        <h2>Guestbook</h2>
+        
+        <form onSubmit={handleSubmit}>
+          <div className="input-group">
+            <input 
+              placeholder="Name" 
+              value={form.name} 
+              onChange={e => setForm({...form, name: e.target.value})} 
+              required 
+            />
+            <input 
+              placeholder="Message" 
+              value={form.message} 
+              onChange={e => setForm({...form, message: e.target.value})} 
+              required 
+            />
+          </div>
+          <button type="submit" className="sign-btn">Sign</button>
+        </form>
 
-      <ul style={{ listStyle: 'none', padding: 0 }}>
-        {messages.map(msg => (
-          <li key={msg.id} style={{ border: '1px solid #ccc', margin: '10px auto', maxWidth: '400px', padding: '10px' }}>
-            <strong>{msg.name}</strong>: {msg.message}
-            <br/>
-            <button onClick={() => handleDelete(msg.id)} style={{ marginTop: '5px', fontSize: '10px', color: 'red' }}>Delete</button>
-          </li>
-        ))}
-      </ul>
+        <ul className="message-list">
+          {messages.map(msg => (
+            <li key={msg.id} className="message-card">
+              <div>
+                <strong>{msg.name}:</strong> {msg.message}
+              </div>
+              <button className="delete-btn" onClick={() => handleDelete(msg.id)}>✕</button>
+            </li>
+          ))}
+        </ul>
+      </div>
+
     </div>
   );
 }
