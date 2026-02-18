@@ -1,0 +1,10 @@
+.social-list { list-style: none; padding: 0; text-align: center; }
+.mc-link {
+  display: inline-block;
+  color: #0000AA;
+  font-size: 1.5rem;
+  text-decoration: none;
+  margin: 10px;
+  border-bottom: 2px solid transparent;
+}
+.mc-link:hover { border-bottom: 2px solid #0000AA; }

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import '../pagescss/Socials.css';
 
 function Socials() {
   return (
@@ -13,5 +14,4 @@ function Socials() {
     </div>
   );
 }
-
 export default Socials;

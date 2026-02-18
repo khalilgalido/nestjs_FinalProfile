@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import './App.css';
+import './App.css'; // Global Styles
 
+// Pages
 import Home from './pages/Home';
 import Guestbook from './pages/Guestbook';
 import Gallery from './pages/Gallery';

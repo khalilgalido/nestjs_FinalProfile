@@ -1,0 +1,13 @@
+.message-list {
+  margin-top: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+  border: 2px solid #555;
+  background: #fff;
+}
+.message-item {
+  padding: 10px;
+  border-bottom: 1px dashed #000;
+  font-size: 1.2rem;
+}
+.name { color: #00aa00; font-weight: bold; }

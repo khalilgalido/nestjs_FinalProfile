@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import '../pagescss/About.css';
 
 function About() {
   return (
@@ -10,7 +11,7 @@ function About() {
         <p><strong>Class:</strong> Web Developer</p>
         <p><strong>Level:</strong> 20</p>
       </div>
-      <hr />
+      <hr style={{border: '1px dashed #555'}} />
       <div className="info-section">
         <h3>Inventory (Skills)</h3>
         <ul>
@@ -23,5 +24,4 @@ function About() {
     </div>
   );
 }
-
 export default About;

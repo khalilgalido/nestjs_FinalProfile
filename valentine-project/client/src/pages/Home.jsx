@@ -1,18 +1,15 @@
 import { Link } from 'react-router-dom';
-import videoBg from '../assets/openingscreen.mp4'; // Import the video
+import videoBg from '../assets/openingscreen.mp4';
+import '../pagescss/Home.css';
 
 function Home() {
   return (
     <div className="home-container">
-      {/* BACKGROUND VIDEO */}
-      <video autoPlay loop muted playsInline className="video-bg">
+      <video className="video-bg" autoPlay loop muted playsInline>
         <source src={videoBg} type="video/mp4" />
       </video>
-
-      {/* OVERLAY (Darkens video slightly so text pops) */}
       <div className="video-overlay"></div>
-
-      {/* CONTENT (Your Menu) */}
+      
       <div className="mc-content">
         <h1 className="mc-logo">MINECRAFT PROFILE</h1>
         <p className="mc-subtitle">Rei Khalil S. Galido</p>

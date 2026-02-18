@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
-
-// Importing your existing assets
+import '../pagescss/Gallery.css';
 import img1 from '../assets/her1.png';
 import img2 from '../assets/me1.png';
 import img3 from '../assets/us1.png';
@@ -8,7 +7,6 @@ import img4 from '../assets/us2.png';
 
 function Gallery() {
   const photos = [img1, img2, img3, img4];
-
   return (
     <div className="mc-panel">
       <h2 className="mc-title">Gallery</h2>
@@ -23,5 +21,4 @@ function Gallery() {
     </div>
   );
 }
-
 export default Gallery;
