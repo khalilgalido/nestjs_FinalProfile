@@ -25,9 +25,9 @@ function About() {
     const savedIndex = localStorage.getItem('selectedSkin');
     if (savedIndex) {
       const index = parseInt(savedIndex);
-      if (index === 0) { setSkin(char1); setSkinName("Khalil"); }
-      if (index === 1) { setSkin(char2); setSkinName("Alex"); }
-      if (index === 2) { setSkin(char3); setSkinName("Herobrine"); }
+      if (index === 0) { setSkin(char1); setSkinName("Viltrumite Lil"); }
+      if (index === 1) { setSkin(char2); setSkinName("lil Lil"); }
+      if (index === 2) { setSkin(char3); setSkinName("MC Lil"); }
     }
   }, []);
 
@@ -46,6 +46,7 @@ function About() {
                 <div className="gamertag">{skinName}</div>
               </div>
               <div className="stats-text">
+                <p><strong>Name:</strong> Khalil <Galido></Galido> 👨</p>
                 <p><strong>Class:</strong> Lazy Developer 👨‍💻</p>
                 <p><strong>Level:</strong> IT Student (Lvl 20)</p>
                 <p><strong>Guild:</strong> Taguig City</p>
