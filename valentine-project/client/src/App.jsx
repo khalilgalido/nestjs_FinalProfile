@@ -1,19 +1,19 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import './App.css'; // Global Styles
+import './App.css';
 
-// Pages
 import Home from './pages/Home';
 import Gallery from './pages/Gallery';
 import About from './pages/About';
 import Portfolio from './pages/Portfolio';
 import Socials from './pages/Socials';
+// REMOVE Guestbook IMPORT
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/guestbook" element={<Guestbook />} />
+        {/* REMOVE /guestbook ROUTE */}
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/about" element={<About />} />
         <Route path="/portfolio" element={<Portfolio />} />
