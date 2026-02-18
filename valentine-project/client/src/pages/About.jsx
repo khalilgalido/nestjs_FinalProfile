@@ -2,28 +2,31 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../pagescss/About.css';
 
-// --- IMPORT YOUR CHARACTER IMAGES ---
-// Make sure these files exist in your assets folder!
+// --- IMPORT CHARACTERS ---
 import char1 from '../assets/char1.png';
 import char2 from '../assets/char2.png';
 import char3 from '../assets/char3.png';
 
 function About() {
-  // Default to first character
   const [skin, setSkin] = useState(char1);
   const [skinName, setSkinName] = useState("Viltrumite Lil");
+  
+  // State for the Skill Popup
+  const [selectedSkill, setSelectedSkill] = useState(null);
 
-  // --- SKILL DATA (Name + Funny Stat) ---
+  // --- UPDATED SKILL DATA ---
+  // Levels: Not good (10-30), Okay (40-60), Confident (80-100)
   const skills = [
-    { name: "React.js", icon: "⚛️", stat: "UI Sorcery Lvl 50" },
-    { name: "NestJS", icon: "🦁", stat: "Backend Beast Mode" },
-    { name: "MySQL", icon: "🐬", stat: "Data Hoarding +100" },
-    { name: "Arduino", icon: "🤖", stat: "Hardware Hacking" },
-    { name: "CSS/Tailwind", icon: "🎨", stat: "Pixel Perfect Arts" },
-    { name: "Supabase", icon: "☁️", stat: "Instant DB Magic" }
+    { name: "PHP", icon: "🐘", level: 90, desc: "Confident. My main weapon." },
+    { name: "MySQL", icon: "🐬", level: 60, desc: "Okay. I can handle queries." },
+    { name: "HTML & CSS", icon: "🎨", level: 65, desc: "Okay. I can build layouts." },
+    { name: "OutSystems", icon: "🚀", level: 50, desc: "Okay. Low-code dev." },
+    { name: "React.js", icon: "⚛️", level: 25, desc: "Learning. Still grinding." },
+    { name: "NestJS", icon: "🦁", level: 20, desc: "Novice. Backend exploration." },
+    { name: "Arduino", icon: "🤖", level: 15, desc: "Beginner. Hardware is hard." },
+    { name: "MongoDB", icon: "🍃", level: 20, desc: "Novice. NoSQL database." },
   ];
 
-  // --- CHECK MEMORY ON LOAD ---
   useEffect(() => {
     const savedIndex = localStorage.getItem('selectedSkin');
     if (savedIndex) {
@@ -41,7 +44,7 @@ function About() {
         
         <div className="about-split-layout">
           
-          {/* --- LEFT SIDE --- */}
+          {/* LEFT SIDE */}
           <div className="about-column left-col">
             <div className="avatar-row">
               <div className="avatar-box">
@@ -76,16 +79,19 @@ function About() {
             </p>
           </div>
 
-          {/* --- VERTICAL DIVIDER --- */}
           <div className="vertical-line"></div>
 
-          {/* --- RIGHT SIDE --- */}
+          {/* RIGHT SIDE */}
           <div className="about-column right-col">
             
-            <h3>🔮 Skill Tree (Hover for Stats)</h3>
+            <h3>🔮 Skill Tree (Click for Level)</h3>
             <div className="skill-grid">
               {skills.map((skill, index) => (
-                <div key={index} className="skill-item" data-tooltip={skill.stat}>
+                <div 
+                  key={index} 
+                  className="skill-item" 
+                  onClick={() => setSelectedSkill(skill)} // <--- CLICK TO OPEN MODAL
+                >
                   {skill.icon} {skill.name}
                 </div>
               ))}
@@ -93,10 +99,9 @@ function About() {
 
             <hr className="mc-divider"/>
 
-            {/* --- UPDATED MINECRAFT INVENTORY --- */}
             <h3>🎒 Inventory</h3>
             <ul className="interest-list">
-              <li>⚔️ <strong>Diamond Sword:</strong> For crushing bugs (and noobs)</li>
+              <li>⚔️ <strong>Diamond Sword:</strong> For crushing bugs</li>
               <li>👑 <strong>Gold Helmet:</strong> King James Fanboy Gear</li>
               <li>🚫 <strong>Barrier Block:</strong> That one error I can't find</li>
             </ul>
@@ -112,10 +117,34 @@ function About() {
               </div>
             </div>
           </div>
-
         </div>
-        <Link to="/" className="back-link">Close GUI</Link>
+        <Link to="/" className="back-link">Return menu</Link>
       </div>
+
+      {/* --- SKILL LEVEL POPUP (MODAL) --- */}
+      {selectedSkill && (
+        <div className="modal-overlay" onClick={() => setSelectedSkill(null)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h3 className="modal-title">{selectedSkill.name} Mastery</h3>
+            
+            {/* The Minecraft XP Bar */}
+            <div className="xp-bar-container">
+              <div 
+                className="xp-bar-fill" 
+                style={{ width: `${selectedSkill.level}%` }}
+              ></div>
+              <span className="xp-text">Lvl {selectedSkill.level}</span>
+            </div>
+            
+            <p className="modal-desc">{selectedSkill.desc}</p>
+            
+            <button className="mc-btn-small" onClick={() => setSelectedSkill(null)}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
