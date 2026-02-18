@@ -1,3 +1,82 @@
-.info-section h3 { color: #444; border-bottom: 2px solid #777; padding-bottom: 5px; }
-.info-section ul { list-style-type: square; padding-left: 20px; }
-.info-section li { font-size: 1.2rem; margin-bottom: 5px; }
+/* --- ABOUT PAGE STYLES --- */
+
+.about-panel {
+  max-width: 800px; /* Wider panel for 2 columns */
+}
+
+.about-content {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* LEFT COLUMN (Avatar) */
+.avatar-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(0,0,0,0.1);
+  padding: 10px;
+  border: 2px solid #777;
+}
+
+.about-skin {
+  height: 200px;
+  image-rendering: pixelated;
+  margin-bottom: 10px;
+}
+
+.gamertag {
+  background: #000;
+  color: #fff;
+  padding: 5px 10px;
+  font-family: 'VT323', monospace;
+  font-size: 1.5rem;
+  border: 2px solid #fff;
+}
+
+/* RIGHT COLUMN (Stats) */
+.stats-section {
+  flex: 2;
+  font-size: 1.3rem;
+}
+
+.stats-section p {
+  margin: 5px 0;
+}
+
+.mc-divider {
+  border: 0;
+  border-top: 2px dashed #555;
+  margin: 15px 0;
+}
+
+.interest-list {
+  list-style: none;
+  padding: 0;
+}
+
+.interest-list li {
+  margin-bottom: 8px;
+}
+
+.bio-text {
+  font-style: italic;
+  color: #333;
+  background: #ddd;
+  padding: 10px;
+  border-left: 4px solid #777;
+}
+
+/* MOBILE FIX */
+@media (max-width: 600px) {
+  .about-content {
+    flex-direction: column;
+    align-items: center;
+  }
+  .stats-section {
+    width: 100%;
+  }
+}

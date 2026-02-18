@@ -19,7 +19,7 @@ function Home() {
   const characters = [
     { img: char1, name: "Viltrumite na Khalil" },
     { img: char2, name: "Lil Weirdkid" },
-    { img: char3, name: "Khalil sa minecraft legit" }
+    { img: char3, name: "Khalil sa minecraft" }
   ];
 
   // --- GUESTBOOK STATE ---
@@ -97,7 +97,7 @@ function Home() {
         
         <div className="menu-grid">
           {/* Removed Guestbook Button since it's on screen now */}
-          <Link to="/about" className="mc-btn">Information</Link>
+          <Link to="/about" className="mc-btn">Character Sheet</Link>
           <Link to="/gallery" className="mc-btn">Gallery</Link>
           <Link to="/portfolio" className="mc-btn">Portfolio</Link>
           <Link to="/socials" className="mc-btn">Socials</Link>
