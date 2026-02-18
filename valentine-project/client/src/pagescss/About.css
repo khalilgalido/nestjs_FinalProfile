@@ -318,10 +318,23 @@
   overflow: hidden;
 }
 
+/* Progress Bar Animation Logic */
 .player-fill {
-  width: 60%; /* Fake progress */
+  width: 100%;
   height: 100%;
   background: #55ff55;
+  transform: translateX(-100%); /* Start hidden/empty */
+  transition: transform 0.2s linear;
+}
+
+/* Only animate when this class is added by React */
+.player-fill.animating {
+  animation: loadBar 30s linear infinite; 
+}
+
+@keyframes loadBar {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0%); }
 }
 
 .player-controls {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import '../pagescss/About.css';
 
@@ -7,19 +7,27 @@ import char1 from '../assets/char1.png';
 import char2 from '../assets/char2.png';
 import char3 from '../assets/char3.png';
 
-// --- IMPORT MUSIC COVERS (Make sure these files exist!) ---
-// If you don't have them yet, you can temporarily use char1.png as a placeholder
-import cover1 from '../assets/song1.jpg'; 
-import cover2 from '../assets/song2.jpg';
-import cover3 from '../assets/song3.jpg';
+// --- IMPORT MUSIC COVERS ---
+import cover1 from '../assets/cover1.jpg'; // Bamboo Cover
+import cover2 from '../assets/cover2.JPG'; // Drake Cover
+import cover3 from '../assets/cover3.jpg'; // La Mave Cover
+
+// --- IMPORT AUDIO FILES ---
+import song1Audio from '../assets/song1.mp3';
+import song2Audio from '../assets/song2.mp3';
+import song3Audio from '../assets/song3.mp3';
 
 function About() {
   const [skin, setSkin] = useState(char1);
   const [skinName, setSkinName] = useState("Viltrumite Lil");
   
-  // State for Popups
+  // --- STATE ---
   const [selectedSkill, setSelectedSkill] = useState(null);
-  const [playingSong, setPlayingSong] = useState(null); // <--- NEW MUSIC STATE
+  const [playingSong, setPlayingSong] = useState(null);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+
+  // --- AUDIO REF (The Music Player Engine) ---
+  const audioRef = useRef(new Audio());
 
   // --- SKILL DATA ---
   const skills = [
@@ -33,13 +41,29 @@ function About() {
     { name: "MongoDB", icon: "🍃", level: 20, desc: "Novice. NoSQL database." },
   ];
 
-  // --- MUSIC LIST (Top 3) ---
+  // --- MUSIC DATA (Updated with your songs) ---
   const musicTracks = [
-    { title: "Die With A Smile", artist: "Lady Gaga & Bruno", cover: cover1 },
-    { title: "Snooze", artist: "SZA", cover: cover2 },
-    { title: "Sweden", artist: "C418", cover: cover3 },
+    { 
+      title: "Much Has Been Said", 
+      artist: "Bamboo", 
+      cover: cover1, 
+      audio: song1Audio 
+    },
+    { 
+      title: "Jumbotron Shit Poppin", 
+      artist: "Drake", 
+      cover: cover2, 
+      audio: song2Audio 
+    },
+    { 
+      title: "Dominga", 
+      artist: "La Mave & Nateman", 
+      cover: cover3, 
+      audio: song3Audio 
+    },
   ];
 
+  // --- SKIN LOAD EFFECT ---
   useEffect(() => {
     const savedIndex = localStorage.getItem('selectedSkin');
     if (savedIndex) {
@@ -49,6 +73,28 @@ function About() {
       if (index === 2) { setSkin(char3); setSkinName("MC Lil"); }
     }
   }, []);
+
+  // --- AUDIO LOGIC (Play when song changes) ---
+  useEffect(() => {
+    if (playingSong) {
+      audioRef.current.src = playingSong.audio;
+      audioRef.current.play().catch(e => console.log("Playback error:", e));
+      setIsAudioPlaying(true);
+    } else {
+      audioRef.current.pause();
+      setIsAudioPlaying(false);
+    }
+  }, [playingSong]);
+
+  // --- TOGGLE PLAY/PAUSE ---
+  const togglePlay = () => {
+    if (isAudioPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsAudioPlaying(!isAudioPlaying);
+  };
 
   return (
     <div className="about-wrapper">
@@ -121,7 +167,7 @@ function About() {
 
             <hr className="mc-divider"/>
 
-            {/* --- NEW JUKEBOX SECTION --- */}
+            {/* JUKEBOX LIST */}
             <h3>🎵 Jukebox (Top 3)</h3>
             <div className="jukebox-list">
               {musicTracks.map((song, i) => (
@@ -140,7 +186,7 @@ function About() {
         <Link to="/" className="back-link">Return menu</Link>
       </div>
 
-      {/* --- SKILL LEVEL POPUP (XP BAR) --- */}
+      {/* --- SKILL POPUP --- */}
       {selectedSkill && (
         <div className="modal-overlay" onClick={() => setSelectedSkill(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -155,31 +201,29 @@ function About() {
         </div>
       )}
 
-      {/* --- NEW MUSIC PLAYER POPUP --- */}
+      {/* --- MUSIC PLAYER POPUP --- */}
       {playingSong && (
         <div className="modal-overlay" onClick={() => setPlayingSong(null)}>
           <div className="modal-content music-player" onClick={(e) => e.stopPropagation()}>
             <h3 className="modal-title">Now Playing</h3>
             
-            {/* Album Art */}
             <div className="album-art-box">
               <img src={playingSong.cover} alt="Cover" className="album-img" />
             </div>
 
-            {/* Song Info */}
             <h2 className="player-title">{playingSong.title}</h2>
             <p className="player-artist">{playingSong.artist}</p>
 
-            {/* Fake Progress Bar */}
             <div className="player-progress">
-              <div className="player-fill"></div>
+              {/* Animation works when playing */}
+              <div className={`player-fill ${isAudioPlaying ? 'animating' : ''}`}></div>
             </div>
 
-            {/* Controls */}
             <div className="player-controls">
-              <button className="control-btn">⏮</button>
-              <button className="control-btn play-btn">⏸</button>
-              <button className="control-btn">⏭</button>
+              {/* Play/Pause Button Logic */}
+              <button className="control-btn play-btn" onClick={togglePlay}>
+                {isAudioPlaying ? "⏸" : "▶"}
+              </button>
             </div>
 
             <button className="mc-btn-small" onClick={() => setPlayingSong(null)}>Eject Disc</button>
