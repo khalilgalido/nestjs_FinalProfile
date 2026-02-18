@@ -1,10 +1,22 @@
-/* --- Widen the Panel to fit 2 pages --- */
-.about-panel {
-  max-width: 1100px !important; /* Force it wider */
-  width: 95%;
+/* --- NEW WRAPPER TO FORCE CENTER --- */
+.about-wrapper {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px; /* Prevents touching edges on small screens */
 }
 
-/* --- The Layout Container --- */
+/* --- The Main Panel --- */
+.about-panel {
+  max-width: 1100px !important;
+  width: 100%;
+  /* Remove top margin since Flexbox handles centering now */
+  margin: 0 auto; 
+}
+
+/* --- Layout Container --- */
 .about-split-layout {
   display: flex;
   justify-content: space-between;
@@ -13,18 +25,18 @@
 
 /* --- Columns --- */
 .about-column {
-  flex: 1; /* Both sides take equal space */
+  flex: 1;
   padding: 10px;
 }
 
-/* --- Vertical Line in Middle --- */
+/* --- Vertical Line --- */
 .vertical-line {
   width: 2px;
   background-color: #777;
-  border-right: 1px solid #fff; /* Creates 3D indented look */
+  border-right: 1px solid #fff;
 }
 
-/* --- LEFT SIDE STYLES (Keep your look) --- */
+/* --- LEFT SIDE --- */
 .avatar-row {
   display: flex;
   gap: 20px;
@@ -39,10 +51,13 @@
   text-align: center;
 }
 
+/* Updated to fit your custom images */
 .about-skin {
   height: 150px;
+  width: auto; /* Keeps aspect ratio */
   image-rendering: pixelated;
   display: block;
+  object-fit: contain;
 }
 
 .gamertag {
@@ -82,10 +97,10 @@
   font-size: 1.1rem;
 }
 
-/* --- RIGHT SIDE STYLES (New) --- */
+/* --- RIGHT SIDE --- */
 .skill-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* 2 columns of skills */
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
 
@@ -95,7 +110,7 @@
   padding: 8px;
   text-align: center;
   font-weight: bold;
-  box-shadow: inset 2px 2px 0 #fff, inset -2px -2px 0 #555; /* Minecraft Button Look */
+  box-shadow: inset 2px 2px 0 #fff, inset -2px -2px 0 #555;
 }
 
 .music-box {
@@ -123,15 +138,11 @@
 /* --- MOBILE RESPONSIVENESS --- */
 @media (max-width: 850px) {
   .about-split-layout {
-    flex-direction: column; /* Stack them on phones */
+    flex-direction: column;
   }
   .vertical-line {
     display: none;
     width: 100%;
     height: 2px;
-  }
-  .about-panel {
-    height: auto;
-    overflow-y: scroll;
   }
 }
