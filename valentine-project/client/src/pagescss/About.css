@@ -88,9 +88,9 @@
 }
 
 .bio-text {
-  background: rgba(0,0,0,0.1);
+  background: rgba(241, 183, 74, 0.815);
   padding: 10px;
-  border: 2px solid #777;
+  border: 2px solid #000000;
   font-style: italic;
   font-size: 1.1rem;
 }

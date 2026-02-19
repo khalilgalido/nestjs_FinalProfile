@@ -130,7 +130,7 @@ function About() {
             <h3>📜 Bio</h3>
             <p className="bio-text">
               "I write code, break code, and then fix code. Always ready for some 
-              emergency hoop session. I only my bed and my mama and my girl 
+              emergency hoop session. I only love my bed and my mama and my girl 
               and Lebron (2018 bron for the specifics)"
             </p>
           </div>

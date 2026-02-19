@@ -28,24 +28,24 @@ function Gallery() {
   // --- DATA STRUCTURE ---
   const galleryData = {
     'Me': [
-      { src: me1, caption: "Skin: Steve" },
-      { src: me2, caption: "Main Character" },
-      { src: me3, caption: "Respawn Point" }
+      { src: me1, caption: "ya boi" },
+      { src: me2, caption: "hoopnation" },
+      { src: me3, caption: "jim" }
     ],
     'My Family': [
-      { src: fam1, caption: "The Server Admins" },
-      { src: fam2, caption: "Home Base" },
-      { src: fam3, caption: "Clan Members" }
+      { src: fam1, caption: "mga boss" },
+      { src: fam2, caption: "Casual out" },
+      { src: fam3, caption: "Me Brother" }
     ],
     'My Boys': [
-      { src: boys1, caption: "Raid Party" },
-      { src: boys2, caption: "The Griefers" },
-      { src: boys3, caption: "PVP Squad" }
+      { src: boys1, caption: "Hoodratz" },
+      { src: boys2, caption: "Kasama si thorfinn (left)" },
+      { src: boys3, caption: "Gooner boys" }
     ],
     'Me & My Girlfriend': [
-      { src: gf1, caption: "My Player 2" },
-      { src: gf2, caption: "Tamed Wolf <3" },
-      { src: gf3, caption: "Shared Inventory" }
+      { src: gf1, caption: "lablab" },
+      { src: gf2, caption: "wabwab" },
+      { src: gf3, caption: "bae" }
     ]
   };
 
