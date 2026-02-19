@@ -4,21 +4,21 @@ import '../pagescss/Gallery.css';
 
 // --- IMPORT IMAGES ---
 // (Make sure these exist in your assets folder!)
-import me1 from '../assets/me1.jpg';
+import me1 from '../assets/me1.jfif';
 import me2 from '../assets/me2.jpg';
-import me3 from '../assets/me3.jpeg';
+import me3 from '../assets/me3.jfif';
 
 import fam1 from '../assets/fam1.jpg';
 import fam2 from '../assets/fam2.jpg';
-import fam3 from '../assets/fam3.jpeg';
+import fam3 from '../assets/fam3.jpg';
 
 import boys1 from '../assets/bois3.jpeg';
-import boys2 from '../assets/bois2.jpg';
+import boys2 from '../assets/bois2.jfif';
 import boys3 from '../assets/bois4.jpeg';
 
-import gf1 from '../assets/gf1.jpg';
+import gf1 from '../assets/gf1.jfif';
 import gf2 from '../assets/gf2.jpg';
-import gf3 from '../assets/gf3.jpeg';
+import gf3 from '../assets/gf3.jfif';
 
 function Gallery() {
   // State for active tab (Default is 'Me')
