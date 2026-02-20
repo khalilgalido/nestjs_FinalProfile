@@ -30,8 +30,10 @@ function Portfolio() {
     { id: 1, level: "Junior High", school: "Thy Covenant", logo: logoTC },
     { id: 2, level: "Senior High", school: "Don Bosco Tech. Inst. Makati", logo: logoDB },
     { id: 3, level: "2nd Year College", school: "Asia Pacific College", logo: logoAPC }
-    // The character will automatically appear on the LAST item in this list
   ];
+
+  // Hover state for the timeline (Defaults to the last index: 2)
+  const [activeNode, setActiveNode] = useState(education.length - 1);
 
   // --- PROJECT CAROUSEL DATA ---
   const projects = [
@@ -94,21 +96,21 @@ function Portfolio() {
         {/* --- SECTION 1: HORIZONTAL EDUCATION JOURNEY --- */}
         <h3 className="section-header">🗺️ The Journey (Education)</h3>
         
-        {/* The Scrollable Container */}
         <div className="timeline-container">
-          {/* The Path/Track */}
-          <div className="timeline-track">
+          {/* Track resets back to Current School (last index) when mouse leaves the track */}
+          <div className="timeline-track" onMouseLeave={() => setActiveNode(education.length - 1)}>
             {education.map((edu, index) => (
-              <div key={edu.id} className="timeline-node">
+              <div 
+                key={edu.id} 
+                className={`timeline-node ${activeNode === index ? 'is-active' : ''}`}
+                onMouseEnter={() => setActiveNode(index)}
+              >
                 
-                {/* LOGIC: If this is the LAST item in the list (index === length - 1),
-                  render the player character here to show current progress.
-                */}
-                {index === education.length - 1 && (
-                  <img src={skin} alt="Player" className="timeline-player" />
+                {/* Character only shows up on the currently hovered/active node */}
+                {activeNode === index && (
+                  <img src={skin} alt="Player Cursor" className="timeline-player" />
                 )}
 
-                {/* The School Info Card */}
                 <div className="school-card">
                   <div className="school-logo-box">
                     <img src={edu.logo} alt="School Logo" className="school-logo" />
