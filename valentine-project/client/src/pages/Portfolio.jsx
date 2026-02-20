@@ -23,13 +23,14 @@ import wireCV from '../assets/wire_cv.JPG';
 function Portfolio() {
   const [skin, setSkin] = useState(char1);
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
-  const [selectedImg, setSelectedImg] = useState(null); // For popup viewing
+  const [selectedImg, setSelectedImg] = useState(null);
 
   // --- EDUCATION JOURNEY DATA ---
   const education = [
     { id: 1, level: "Junior High", school: "Thy Covenant", logo: logoTC },
     { id: 2, level: "Senior High", school: "Don Bosco Tech. Inst. Makati", logo: logoDB },
     { id: 3, level: "2nd Year College", school: "Asia Pacific College", logo: logoAPC }
+    // The character will automatically appear on the LAST item in this list
   ];
 
   // --- PROJECT CAROUSEL DATA ---
@@ -90,18 +91,24 @@ function Portfolio() {
       <div className="mc-panel portfolio-panel">
         <h2 className="mc-title">Quest Log & Inventory</h2>
 
-        {/* --- SECTION 1: HORIZONTAL EDUCATION TIMELINE --- */}
+        {/* --- SECTION 1: HORIZONTAL EDUCATION JOURNEY --- */}
         <h3 className="section-header">🗺️ The Journey (Education)</h3>
+        
+        {/* The Scrollable Container */}
         <div className="timeline-container">
+          {/* The Path/Track */}
           <div className="timeline-track">
             {education.map((edu, index) => (
               <div key={edu.id} className="timeline-node">
                 
-                {/* Put the character on the last node (Current School) */}
+                {/* LOGIC: If this is the LAST item in the list (index === length - 1),
+                  render the player character here to show current progress.
+                */}
                 {index === education.length - 1 && (
                   <img src={skin} alt="Player" className="timeline-player" />
                 )}
 
+                {/* The School Info Card */}
                 <div className="school-card">
                   <div className="school-logo-box">
                     <img src={edu.logo} alt="School Logo" className="school-logo" />
@@ -135,7 +142,6 @@ function Portfolio() {
                 <p className="proj-desc">{projects[currentProjectIndex].desc}</p>
               </div>
             </div>
-            {/* Carousel Indicators */}
             <div className="carousel-dots">
               {projects.map((_, idx) => (
                 <span key={idx} className={`dot ${idx === currentProjectIndex ? 'active' : ''}`}></span>
@@ -164,7 +170,7 @@ function Portfolio() {
         <Link to="/" className="back-link">Return Menu</Link>
       </div>
 
-      {/* --- IMAGE LIGHTBOX (Popup for viewing photos) --- */}
+      {/* --- IMAGE LIGHTBOX --- */}
       {selectedImg && (
         <div className="modal-overlay" onClick={() => setSelectedImg(null)}>
           <div className="modal-content lightbox-content" onClick={(e) => e.stopPropagation()}>

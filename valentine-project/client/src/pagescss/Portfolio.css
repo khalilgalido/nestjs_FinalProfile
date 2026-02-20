@@ -28,33 +28,44 @@
   margin: 30px 0;
 }
 
-/* --- HORIZONTAL TIMELINE (THE JOURNEY) --- */
+/* =========================================
+   NEW: HORIZONTAL TIMELINE (THE JOURNEY)
+========================================= */
 .timeline-container {
   width: 100%;
-  overflow-x: auto; /* Allows horizontal scrolling */
-  padding: 20px 0 40px 0; /* Extra padding for the character */
+  overflow-x: auto; /* Allows horizontal scrolling if items overflow */
+  padding: 30px 0 50px 0; /* Extra padding top for character, bottom for track */
+  
+  /* Custom Scrollbar styling for Chrome/Safari/Edge */
+  scrollbar-width: thin;
+  scrollbar-color: #8b8b8b #3a3a3a;
 }
 
-/* Custom Scrollbar for Timeline */
 .timeline-container::-webkit-scrollbar {
   height: 12px;
 }
 .timeline-container::-webkit-scrollbar-track {
-  background: #3a3a3a;
+  background: #3a3a3a; /* Dark track */
   border: 2px solid #fff;
 }
 .timeline-container::-webkit-scrollbar-thumb {
-  background: #8b8b8b;
+  background: #8b8b8b; /* Minecraft gray button color */
   border: 2px solid #373737;
 }
 
 .timeline-track {
   display: flex;
-  min-width: max-content; /* Forces items to stay in a row */
-  gap: 40px;
+  align-items: flex-end; /* Align items to the path line */
+  gap: 60px; /* Space between education points */
+  
+  /* The "Dirt Path" line */
+  border-bottom: 8px solid #5c3c1e; 
+  padding-bottom: 30px;
   position: relative;
-  border-bottom: 6px solid #5c3c1e; /* Dirt/Wood track path */
-  padding-bottom: 20px;
+  
+  /* Ensures it doesn't squish on small screens, forcing scroll */
+  min-width: max-content; 
+  margin: 0 auto; /* Centers the track if it's smaller than screen */
 }
 
 .timeline-node {
@@ -64,31 +75,54 @@
   align-items: center;
 }
 
-/* Connecting line visually going through the center */
+/* The Green Dot on the path */
 .timeline-node::after {
   content: '';
   position: absolute;
-  bottom: -26px; /* Touches the track */
-  width: 20px;
-  height: 20px;
-  background: #55ff55;
-  border: 3px solid #000;
-  border-radius: 50%;
+  bottom: -38px; /* Positions it exactly on the dirt line */
+  width: 24px;
+  height: 24px;
+  background: #55ff55; /* Minecraft XP Green */
+  border: 4px solid #000;
+  image-rendering: pixelated;
+  box-shadow: inset 2px 2px 0 rgba(255,255,255,0.5);
   z-index: 2;
 }
 
+/* The School Information Card placed above the dot */
 .school-card {
   background: #c6c6c6;
   border: 3px solid #555;
   box-shadow: inset 2px 2px 0 #fff, inset -2px -2px 0 #777, 4px 4px 0 rgba(0,0,0,0.3);
   width: 220px;
   text-align: center;
-  padding: 10px;
+  padding: 15px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
   z-index: 3;
 }
+
+/* --- THE CHARACTER ON THE JOURNEY --- */
+.timeline-player {
+  position: absolute;
+  top: -100px; /* Stand ON TOP of the school card */
+  height: 90px;
+  width: auto;
+  image-rendering: pixelated;
+  z-index: 10;
+  filter: drop-shadow(4px 4px 0 rgba(0,0,0,0.5));
+  /* Add a little idle breathing animation */
+  animation: idleBounce 1.5s infinite ease-in-out alternate;
+}
+
+@keyframes idleBounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-8px); }
+}
+
+/* ... (Rest of CSS for logos, badges, carousel remains the same) ... */
 
 .school-logo-box {
   width: 80px;
@@ -109,34 +143,23 @@
 }
 
 .school-info h4 {
-  margin: 0 0 5px 0;
+  margin: 0 0 10px 0;
   font-size: 1.1rem;
   color: #111;
-  min-height: 40px; /* Keeps heights even */
+  min-height: 40px; /* Keeps heights even if titles vary */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .mc-badge {
   background: #111;
   color: #55ff55;
-  padding: 3px 8px;
+  padding: 4px 10px;
   font-size: 0.9rem;
   font-family: monospace;
-}
-
-/* The Player Character standing on the timeline */
-.timeline-player {
-  position: absolute;
-  top: -90px; /* Positions character standing on the card */
-  height: 80px;
-  width: auto;
-  image-rendering: pixelated;
-  animation: bounce 1s infinite alternate;
-  z-index: 10;
-}
-
-@keyframes bounce {
-  from { transform: translateY(0); }
-  to { transform: translateY(-10px); }
+  border: 2px solid #333;
+  box-shadow: inset 1px 1px 0 #555;
 }
 
 
@@ -324,9 +347,14 @@
     width: 100%;
   }
   .carousel-img-box {
-    height: 200px; /* Smaller image on mobile */
+    height: 200px;
   }
   .wireframe-grid {
-    grid-template-columns: 1fr; /* Stack wireframes */
+    grid-template-columns: 1fr;
+  }
+  /* Ensure timeline scrolls on mobile */
+  .timeline-track {
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
