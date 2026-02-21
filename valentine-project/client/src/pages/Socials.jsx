@@ -10,19 +10,29 @@ import char3 from '../assets/char3.png';
 function Socials() {
   const [skin, setSkin] = useState(char1);
 
-  // Form state for the Guestbook (No email, just Name and Message)
+  // Form state
   const [formData, setFormData] = useState({ name: '', message: '' });
 
-  // Chat Log State (Pre-filled with some fun server messages)
-  const [chatLogs, setChatLogs] = useState([
-    { id: 1, name: "Server", text: "Welcome to the portfolio server!" },
-    { id: 2, name: "Notch", text: "Nice builds. Keep grinding." },
-    { id: 3, name: "Herobrine", text: "I'm watching your code..." }
-  ]);
-
+  // Chat Log State (Will be filled by your database)
+  const [chatLogs, setChatLogs] = useState([]);
+  
   const chatEndRef = useRef(null);
 
-  // Load the player's character choice
+  // --- 1. FETCH GUESTBOOK DATA FROM YOUR BACKEND ---
+  const fetchGuestbook = async () => {
+    try {
+      // CHANGE THIS URL if your backend uses a different route/port!
+      const response = await fetch('http://localhost:3000/guestbook'); 
+      if (response.ok) {
+        const data = await response.json();
+        setChatLogs(data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch guestbook:", error);
+    }
+  };
+
+  // Load character & fetch data when page loads
   useEffect(() => {
     const savedIndex = localStorage.getItem('selectedSkin');
     if (savedIndex) {
@@ -31,9 +41,12 @@ function Socials() {
       if (index === 1) setSkin(char2);
       if (index === 2) setSkin(char3);
     }
+    
+    // Get messages from DB
+    fetchGuestbook();
   }, []);
 
-  // Auto-scroll to the bottom of the chat when a new message is added
+  // Auto-scroll to the bottom of the chat when messages update
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatLogs]);
@@ -42,21 +55,34 @@ function Socials() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSend = (e) => {
+  // --- 2. SEND NEW MESSAGE TO YOUR BACKEND ---
+  const handleSend = async (e) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.message.trim()) return;
 
-    // Add new message to the chat log
-    const newMsg = {
-      id: Date.now(),
-      name: formData.name,
-      text: formData.message
-    };
+    try {
+      // CHANGE THIS URL if your backend uses a different route/port!
+      const response = await fetch('http://localhost:3000/guestbook', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          message: formData.message
+        }),
+      });
 
-    setChatLogs([...chatLogs, newMsg]);
-    
-    // Clear the message input, but keep the name so they can type again quickly
-    setFormData({ ...formData, message: '' }); 
+      if (response.ok) {
+        // Clear the message input, but keep the name so they can type again quickly
+        setFormData({ ...formData, message: '' }); 
+        
+        // Refresh the chat log from the database
+        fetchGuestbook();
+      }
+    } catch (error) {
+      console.error("Failed to post message:", error);
+    }
   };
 
   return (
@@ -66,11 +92,10 @@ function Socials() {
         {/* --- TOP SECTION: CONTACT & AVATAR --- */}
         <div className="contact-hero">
           
-          {/* LEFT SIDE: Text and Links */}
           <div className="contact-info">
             <h1 className="contact-title">contact me</h1>
             <p className="contact-sub">
-              Do you speak Java? It's ok if you don't, I speak English too.
+              lets connect brochacho, emergency hoop sesh allat shi
             </p>
 
             <div className="social-links">
@@ -96,7 +121,6 @@ function Socials() {
             </div>
           </div>
 
-          {/* RIGHT SIDE: Large Character Image */}
           <div className="contact-avatar">
             <img src={skin} alt="Selected Character" className="hero-char-img" />
           </div>
@@ -105,25 +129,27 @@ function Socials() {
 
         <hr className="mc-divider" />
 
-        {/* --- BOTTOM SECTION: GUESTBOOK & CHAT --- */}
+        {/* --- BOTTOM SECTION: DATABASE GUESTBOOK CHAT --- */}
         <div className="guestbook-section">
           <h2 className="guestbook-title">Server Chat / Guestbook</h2>
           
-          {/* MINECRAFT CHAT BOX */}
           <div className="mc-chat-box">
-            {chatLogs.map((chat) => (
-              <div key={chat.id} className="chat-message">
-                {chat.name === "Server" ? (
-                  <span className="chat-server-text">[Server] {chat.text}</span>
-                ) : (
-                  <>
-                    <span className="chat-name">&lt;{chat.name}&gt;</span>
-                    <span className="chat-text"> {chat.text}</span>
-                  </>
-                )}
+            {/* If the database is empty, show a system message */}
+            {chatLogs.length === 0 && (
+              <div className="chat-message">
+                <span className="chat-server-text">[Server] No messages yet. Be the first to type!</span>
+              </div>
+            )}
+
+            {/* Map through the database entries */}
+            {chatLogs.map((chat, index) => (
+              <div key={chat.id || index} className="chat-message">
+                <span className="chat-name">&lt;{chat.name}&gt;</span>
+                {/* Note: using chat.message assuming your DB saves it as 'message' */}
+                <span className="chat-text"> {chat.message}</span>
               </div>
             ))}
-            <div ref={chatEndRef} /> {/* Invisible element to snap scroll to bottom */}
+            <div ref={chatEndRef} />
           </div>
 
           {/* CHAT INPUT FORM */}
