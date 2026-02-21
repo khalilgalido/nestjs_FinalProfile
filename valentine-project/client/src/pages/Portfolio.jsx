@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import '../pagescss/Portfolio.css';
 
@@ -27,6 +27,9 @@ function Portfolio() {
   
   // NEW: State for clicking a school
   const [selectedSchool, setSelectedSchool] = useState(null);
+
+  // --- NEW: Reference for the sliding cards track ---
+  const cardsTrackRef = useRef(null); 
 
   // --- EDUCATION JOURNEY DATA (Added Descriptions) ---
   const education = [
@@ -77,6 +80,17 @@ function Portfolio() {
       if (index === 2) setSkin(char3);
     }
   }, []);
+
+  // --- NEW: Smoothly slide to the active project card ---
+  useEffect(() => {
+    if (cardsTrackRef.current && cardsTrackRef.current.children[currentProjectIndex]) {
+      cardsTrackRef.current.children[currentProjectIndex].scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center' // This centers the active card in the view
+      });
+    }
+  }, [currentProjectIndex]);
 
   const nextProject = () => setCurrentProjectIndex((prev) => (prev + 1) % projects.length);
   const prevProject = () => setCurrentProjectIndex((prev) => (prev === 0 ? projects.length - 1 : prev - 1));
@@ -146,8 +160,8 @@ function Portfolio() {
               </div>
             </div>
 
-            {/* RIGHT SIDE: Scrollable Cards */}
-            <div className="sleek-cards-track">
+            {/* RIGHT SIDE: Scrollable Cards (Now with the Ref attached!) */}
+            <div className="sleek-cards-track" ref={cardsTrackRef}>
               {projects.map((proj, idx) => (
                 <div 
                   key={idx} 
