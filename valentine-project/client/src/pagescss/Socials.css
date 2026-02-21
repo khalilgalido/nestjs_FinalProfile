@@ -175,22 +175,27 @@
 /* --- THE INPUT FORM --- */
 .mc-chat-form {
   width: 100%;
+  margin-top: 10px; /* Space between chat log and inputs */
 }
 
 .chat-inputs {
   display: flex;
   gap: 10px;
+  width: 100%;
+  align-items: stretch; /* Makes sure all boxes are the exact same height */
 }
 
 .mc-input {
+  box-sizing: border-box; /* Crucial: Stops padding from breaking the width */
   background: rgba(0,0,0,0.8);
   color: #fff;
   border: 2px solid #555;
   box-shadow: inset 2px 2px 0 #111, inset -2px -2px 0 #333;
-  padding: 10px 15px;
+  padding: 12px 15px;
   font-family: monospace;
   font-size: 1.1rem;
   outline: none;
+  border-radius: 0; /* Removes modern rounded corners */
 }
 
 .mc-input:focus {
@@ -199,19 +204,36 @@
 
 /* Sizing for the inputs */
 .chat-name-input {
-  width: 150px;
-  flex-shrink: 0;
+  flex: 0 0 180px; /* Fixed width so it never shrinks */
+  width: 180px;    /* Extra space so "Gamertag (Name)" fits perfectly */
 }
 
 .chat-msg-input {
-  flex-grow: 1;
+  flex: 1 1 auto; /* Forces the message box to take up all middle space */
+  width: 100%;
 }
 
 .chat-send-btn {
-  height: auto;
-  padding: 0 20px;
-  flex-shrink: 0;
+  flex: 0 0 auto; /* Keeps the button exactly the size of its text */
+  background: #8b8b8b;
+  color: #fff;
+  border: 2px solid #373737;
+  box-shadow: inset 2px 2px 0 #fff, inset -2px -2px 0 #555;
+  padding: 0 25px;
   font-size: 1.2rem;
+  font-family: inherit;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 0; /* Overrides any global rounded buttons */
+  transition: background 0.1s;
+}
+
+.chat-send-btn:hover {
+  background: #a0a0a0;
+}
+
+.chat-send-btn:active {
+  box-shadow: inset 2px 2px 0 #555, inset -2px -2px 0 #fff;
 }
 
 .center-link {
@@ -233,13 +255,18 @@
   .social-row {
     justify-content: center;
   }
+  
+  /* Stack the chat inputs on mobile */
   .chat-inputs {
     flex-direction: column;
   }
-  .chat-name-input {
+  .chat-name-input, 
+  .chat-msg-input {
+    flex: 1;
     width: 100%;
   }
   .chat-send-btn {
-    padding: 10px;
+    padding: 12px;
+    width: 100%;
   }
 }

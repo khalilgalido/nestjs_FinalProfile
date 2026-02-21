@@ -13,22 +13,31 @@ function Socials() {
   // Form state
   const [formData, setFormData] = useState({ name: '', message: '' });
 
-  // Chat Log State (Will be filled by your database)
+  // Chat Log State
   const [chatLogs, setChatLogs] = useState([]);
   
   const chatEndRef = useRef(null);
 
+  // ⚠️ PASTE YOUR EXACT BACKEND URL FROM YOUR MAIN MENU HERE ⚠️
+  // Example: 'http://localhost:3001/guestbook' or 'https://my-nestjs-app.com/guestbook'
+  const API_URL = 'https://nestjs-valentines-backened.onrender.com/guestbook'; 
+
   // --- 1. FETCH GUESTBOOK DATA FROM YOUR BACKEND ---
   const fetchGuestbook = async () => {
     try {
-      // CHANGE THIS URL if your backend uses a different route/port!
-      const response = await fetch('http://localhost:3000/guestbook'); 
+      const response = await fetch(API_URL); 
       if (response.ok) {
         const data = await response.json();
+        
+        // DEBUG: This will print your database messages to your browser console!
+        console.log("Database Data received:", data); 
+        
         setChatLogs(data);
+      } else {
+        console.error("Failed to fetch. Server responded with status:", response.status);
       }
     } catch (error) {
-      console.error("Failed to fetch guestbook:", error);
+      console.error("Failed to fetch guestbook (Check your API_URL):", error);
     }
   };
 
@@ -61,8 +70,7 @@ function Socials() {
     if (!formData.name.trim() || !formData.message.trim()) return;
 
     try {
-      // CHANGE THIS URL if your backend uses a different route/port!
-      const response = await fetch('http://localhost:3000/guestbook', {
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -145,7 +153,6 @@ function Socials() {
             {chatLogs.map((chat, index) => (
               <div key={chat.id || index} className="chat-message">
                 <span className="chat-name">&lt;{chat.name}&gt;</span>
-                {/* Note: using chat.message assuming your DB saves it as 'message' */}
                 <span className="chat-text"> {chat.message}</span>
               </div>
             ))}
