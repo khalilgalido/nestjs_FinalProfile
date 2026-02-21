@@ -84,7 +84,7 @@ function Portfolio() {
   return (
     <div className="portfolio-wrapper">
       <div className="mc-panel portfolio-panel">
-        <h2 className="mc-title">Quest Log & Inventory</h2>
+        <h2 className="mc-title">Education and Portfolio</h2>
 
         {/* --- SECTION 1: HORIZONTAL EDUCATION JOURNEY --- */}
         <h3 className="section-header">🗺️ The Journey (Education)</h3>
@@ -119,27 +119,48 @@ function Portfolio() {
           </div>
         </div>
 
-        <hr className="mc-divider" />
-
-        {/* --- SECTION 2: PROJECTS CAROUSEL --- */}
+        {/* --- SECTION 2: SLEEK PROJECT SHOWCASE --- */}
         <h3 className="section-header">🛠️ Crafted Systems (Projects)</h3>
-        {/* ... (Carousel Code Remains Exactly the Same) ... */}
-        <div className="carousel-wrapper">
-          <button className="mc-btn-small carousel-btn" onClick={prevProject}>◄</button>
-          <div className="carousel-view">
-            <div className="carousel-card">
-              <div className="carousel-img-box" onClick={() => setSelectedImg(projects[currentProjectIndex].image)}>
-                <img src={projects[currentProjectIndex].image} alt="Project" className="carousel-img" />
-                <div className="click-to-enlarge">🔍 Click to enlarge</div>
-              </div>
-              <div className="carousel-details">
-                <h4 className="proj-title">{projects[currentProjectIndex].title}</h4>
-                <p className="proj-tech"><strong>Tech:</strong> {projects[currentProjectIndex].tech}</p>
-                <p className="proj-desc">{projects[currentProjectIndex].desc}</p>
+        
+        <div 
+          className="sleek-showcase-container"
+          style={{ backgroundImage: `url(${projects[currentProjectIndex].image})` }}
+        >
+          {/* Dark gradient overlay to make text readable */}
+          <div className="sleek-overlay"></div>
+
+          <div className="sleek-content">
+            
+            {/* LEFT SIDE: Project Info */}
+            <div className="sleek-info">
+              <span className="sleek-tech-badge">{projects[currentProjectIndex].tech}</span>
+              <h1 className="sleek-title">{projects[currentProjectIndex].title}</h1>
+              <p className="sleek-desc">{projects[currentProjectIndex].desc}</p>
+              
+              <div className="sleek-controls">
+                <button className="mc-btn-small" onClick={prevProject}>◄ Prev</button>
+                <button className="mc-btn-small" onClick={() => setSelectedImg(projects[currentProjectIndex].image)}>
+                  🔍 Enlarge Image
+                </button>
+                <button className="mc-btn-small" onClick={nextProject}>Next ►</button>
               </div>
             </div>
+
+            {/* RIGHT SIDE: Scrollable Cards */}
+            <div className="sleek-cards-track">
+              {projects.map((proj, idx) => (
+                <div 
+                  key={idx} 
+                  className={`sleek-card ${idx === currentProjectIndex ? 'is-active' : ''}`}
+                  onClick={() => setCurrentProjectIndex(idx)}
+                >
+                  <img src={proj.image} alt={proj.title} className="sleek-card-img" />
+                  <div className="sleek-card-title">{proj.title}</div>
+                </div>
+              ))}
+            </div>
+
           </div>
-          <button className="mc-btn-small carousel-btn" onClick={nextProject}>►</button>
         </div>
 
         <hr className="mc-divider" />
