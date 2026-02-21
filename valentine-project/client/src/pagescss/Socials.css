@@ -15,7 +15,7 @@
   background: #c6c6c6;
   border: 4px solid #000;
   box-shadow: inset 4px 4px 0 #fff, inset -4px -4px 0 #555, 10px 10px 0 rgba(0,0,0,0.5);
-  padding: 40px !important;
+  padding: 40px;
 }
 
 .mc-divider {
@@ -104,11 +104,10 @@
 
 .hero-char-img {
   width: 100%;
-  max-width: 300px; /* Large character size */
+  max-width: 300px;
   height: auto;
   image-rendering: pixelated;
   filter: drop-shadow(5px 5px 0 rgba(0,0,0,0.3));
-  /* Floating animation */
   animation: floatAvatar 3s ease-in-out infinite alternate;
 }
 
@@ -118,7 +117,7 @@
 }
 
 /* =========================================
-   BOTTOM SECTION: GUESTBOOK FORM
+   BOTTOM SECTION: MINECRAFT CHAT GUESTBOOK
 ========================================= */
 .guestbook-section {
   width: 100%;
@@ -127,41 +126,69 @@
 .guestbook-title {
   font-size: 1.8rem;
   color: #333;
-  margin: 0 0 20px 0;
+  margin: 0 0 15px 0;
 }
 
-.mc-form {
+/* --- THE CHAT LOG BOX --- */
+.mc-chat-box {
+  background: rgba(0, 0, 0, 0.6);
+  border: 4px solid #373737;
+  height: 200px;
+  overflow-y: auto;
+  padding: 15px;
+  margin-bottom: 10px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 8px;
+  
+  /* Scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: #8b8b8b rgba(0,0,0,0.3);
 }
 
-.form-row {
+.mc-chat-box::-webkit-scrollbar { width: 10px; }
+.mc-chat-box::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
+.mc-chat-box::-webkit-scrollbar-thumb { background: #8b8b8b; border: 1px solid #000; }
+
+/* --- CHAT MESSAGES --- */
+.chat-message {
+  font-family: monospace;
+  font-size: 1.2rem;
+  color: #fff;
+  text-shadow: 2px 2px 0 #000;
+  word-wrap: break-word;
+}
+
+.chat-name {
+  color: #fff;
+}
+
+.chat-text {
+  color: #fff;
+}
+
+/* Make special system messages yellow/gold */
+.chat-server-text {
+  color: #ffff55; 
+}
+
+/* --- THE INPUT FORM --- */
+.mc-chat-form {
+  width: 100%;
+}
+
+.chat-inputs {
   display: flex;
-  gap: 20px;
+  gap: 10px;
 }
 
-.input-group {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  text-align: left;
-}
-
-.input-group label {
-  color: #444;
-  font-size: 1.1rem;
-}
-
-/* Minecraft Chat Input Style */
 .mc-input {
-  background: #000;
+  background: rgba(0,0,0,0.8);
   color: #fff;
   border: 2px solid #555;
-  box-shadow: inset 2px 2px 0 #111, inset -2px -2px 0 #333, 2px 2px 0 #fff;
-  padding: 12px;
-  font-family: inherit;
+  box-shadow: inset 2px 2px 0 #111, inset -2px -2px 0 #333;
+  padding: 10px 15px;
+  font-family: monospace;
   font-size: 1.1rem;
   outline: none;
 }
@@ -170,31 +197,21 @@
   border-color: #55ff55;
 }
 
-.mc-textarea {
-  resize: vertical;
+/* Sizing for the inputs */
+.chat-name-input {
+  width: 150px;
+  flex-shrink: 0;
 }
 
-.guestbook-btn {
-  background: #3c8527; /* Darker green */
-  color: white;
-  border: 4px solid #000;
-  box-shadow: inset 4px 4px 0 #55ff55, inset -4px -4px 0 #1e4d10;
-  padding: 15px;
-  font-size: 1.5rem;
-  font-family: inherit;
-  cursor: pointer;
-  text-align: center;
-  transition: transform 0.1s;
-  margin-top: 10px;
+.chat-msg-input {
+  flex-grow: 1;
 }
 
-.guestbook-btn:hover {
-  background: #4ab032;
-}
-
-.guestbook-btn:active {
-  box-shadow: inset 4px 4px 0 #1e4d10, inset -4px -4px 0 #55ff55;
-  transform: translateY(2px);
+.chat-send-btn {
+  height: auto;
+  padding: 0 20px;
+  flex-shrink: 0;
+  font-size: 1.2rem;
 }
 
 .center-link {
@@ -214,9 +231,15 @@
     margin-top: 20px;
   }
   .social-row {
-    justify-content: center; /* Center links on mobile */
+    justify-content: center;
   }
-  .form-row {
+  .chat-inputs {
     flex-direction: column;
+  }
+  .chat-name-input {
+    width: 100%;
+  }
+  .chat-send-btn {
+    padding: 10px;
   }
 }
