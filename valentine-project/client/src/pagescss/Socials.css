@@ -173,67 +173,79 @@
 }
 
 /* --- THE INPUT FORM --- */
-/* --- THE INPUT FORM --- */
 .mc-chat-form {
   width: 100%;
-  margin-top: 10px; /* Space between chat log and inputs */
+  margin-top: 10px; 
 }
 
+/* Bulletproof Flexbox Row */
 .chat-inputs {
-  display: flex;
+  display: flex !important;
+  flex-direction: row !important;
   gap: 10px;
   width: 100%;
-  align-items: stretch; /* Makes sure all boxes are the exact same height */
+  height: 48px; /* Lock the height so they all perfectly match */
 }
 
+/* Base input styles */
 .mc-input {
-  box-sizing: border-box; /* Crucial: Stops padding from breaking the width */
+  box-sizing: border-box !important;
   background: rgba(0,0,0,0.8);
   color: #fff;
   border: 2px solid #555;
   box-shadow: inset 2px 2px 0 #111, inset -2px -2px 0 #333;
-  padding: 12px 15px;
+  padding: 0 15px;
   font-family: monospace;
   font-size: 1.1rem;
   outline: none;
-  border-radius: 0; /* Removes modern rounded corners */
+  border-radius: 0; 
 }
 
 .mc-input:focus {
   border-color: #55ff55;
 }
 
-/* Sizing for the inputs */
-.chat-name-input {
-  flex: 0 0 180px; /* Fixed width so it never shrinks */
-  width: 180px;    /* Extra space so "Gamertag (Name)" fits perfectly */
+/* Force Name input to stay exactly 180px */
+.mc-input.chat-name-input {
+  flex: 0 0 180px !important; 
+  width: 180px !important;
 }
 
-.chat-msg-input {
-  flex: 1 1 auto; /* Forces the message box to take up all middle space */
-  width: 100%;
+/* Force Message input to take all remaining space */
+.mc-input.chat-msg-input {
+  flex: 1 !important; 
+  width: auto !important; 
 }
 
-.chat-send-btn {
-  flex: 0 0 auto; /* Keeps the button exactly the size of its text */
+/* Force Send Button to stay exactly 120px */
+button.chat-send-btn {
+  flex: 0 0 120px !important;
+  width: 120px !important;
+  box-sizing: border-box !important;
   background: #8b8b8b;
   color: #fff;
   border: 2px solid #373737;
   box-shadow: inset 2px 2px 0 #fff, inset -2px -2px 0 #555;
-  padding: 0 25px;
+  padding: 0 !important;
+  margin: 0 !important;
   font-size: 1.2rem;
   font-family: inherit;
   font-weight: bold;
   cursor: pointer;
-  border-radius: 0; /* Overrides any global rounded buttons */
+  border-radius: 0; 
   transition: background 0.1s;
+  
+  /* Center the text perfectly */
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
-.chat-send-btn:hover {
+button.chat-send-btn:hover {
   background: #a0a0a0;
 }
 
-.chat-send-btn:active {
+button.chat-send-btn:active {
   box-shadow: inset 2px 2px 0 #555, inset -2px -2px 0 #fff;
 }
 
@@ -259,15 +271,14 @@
   
   /* Stack the chat inputs on mobile */
   .chat-inputs {
-    flex-direction: column;
+    flex-direction: column !important;
+    height: auto; /* Remove the fixed height for mobile */
   }
-  .chat-name-input, 
-  .chat-msg-input {
-    flex: 1;
-    width: 100%;
-  }
-  .chat-send-btn {
-    padding: 12px;
-    width: 100%;
+  .mc-input.chat-name-input, 
+  .mc-input.chat-msg-input,
+  button.chat-send-btn {
+    flex: 1 !important;
+    width: 100% !important;
+    height: 48px; /* Give them each height when stacked */
   }
 }
